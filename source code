@@ -1,0 +1,58 @@
+                                           //File Handling using multiple array object
+#include <iostream>
+#include <fstream>
+
+
+using namespace std;
+
+class Base
+{
+private:
+    int base_data;
+public:
+    void set_data(int data)
+    {
+        base_data = data;
+    }
+    int get_data()
+    {
+        return base_data;
+    }
+
+};
+
+int main()
+{
+    Base obj[3], arr[3];
+
+    obj[0].set_data(11);
+    obj[1].set_data(22);
+    obj[2].set_data(33);
+
+
+
+    ofstream fout("example.dat", ios::binary);
+    ifstream fin("example.dat" , ios::binary);
+
+    if(!fout && !fin)
+    {
+        cerr<<"File Creation Failed"<<endl;
+        return 1;
+    }
+
+    fout.write(reinterpret_cast<char*>(obj),3 * sizeof(Base));
+
+    fout.close();
+
+    fin.read(reinterpret_cast<char*>(arr),3 * sizeof(Base));
+    cout<<arr[0].get_data()<<endl;
+    cout<<arr[1].get_data()<<endl;
+    cout<<arr[2].get_data()<<endl;
+
+
+
+
+    fin.close();
+
+    return 0;
+}
